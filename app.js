@@ -6,9 +6,16 @@ const cors = require('cors');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
-app.use(cors({origin: '*'}));
+app.use(cors({origin: 'https://text-editor-client-new.onrender.com'}));
 
-app.options('*', cors());
+app.options("/", (req, res) => {
+    res.setHeader("Access-Control-Allow-Origin", "https://text-editor-client-new.onrender.com");
+    res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    res.sendStatus(204);
+});
+
+// app.options('*', cors());
 
 function getDate(){
     const currentDate = new Date();
