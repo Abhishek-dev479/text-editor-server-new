@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors({origin: '*'}));
 
-app.options('*', cors({origin: '*'}));
+app.options('*', cors());
 
 function getDate(){
     const currentDate = new Date();
@@ -46,25 +46,31 @@ app.post('/login', async (req, res, next) => {
 
 app.post('/signup', async (req, res) => {
     let email = req.body.email;
+    console.log(email);
     let user = undefined;
+    try{
         user = await User.find({email: email});
-        console.log(user.length);
-        if(user.length != 0) res.json({message: 'user exists'});
-        else{
-            let newUser = new User({
-                _id: uuidv4(),
-                email: email,
-                name: req.body.username,
-                password: req.body.password
-            });
-            let u = await newUser.save();
-            console.log(u);
-            if(u != undefined){
-                res.json({message: 'success', userId: u._id});
-                userdetails = newUser;
-            } 
-            else res.json({message: 'error'});
-        }
+    }
+    catch(e){
+        console.log(e);
+    }
+    console.log(user.length);
+    if(user.length != 0) res.json({message: 'user exists'});
+    else{
+        let newUser = new User({
+            _id: uuidv4(),
+            email: email,
+            name: req.body.username,
+            password: req.body.password
+        });
+        let u = await newUser.save();
+        console.log(u);
+        if(u != undefined){
+            res.json({message: 'success', userId: u._id});
+            userdetails = newUser;
+        } 
+        else res.json({message: 'error'});
+    }
     // console.log(user);
     // if(user != undefined) res.json({message: 'user exists'});
     // else{
