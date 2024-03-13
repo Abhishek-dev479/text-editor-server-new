@@ -31,7 +31,7 @@ const User = mongoose.model('users', userSchema);
 
 const io = require("socket.io")(3001, {
   cors: {
-    origin: "*",
+    origin: "https://text-editor-taupe-nine.vercel.app",
   }
 })
 
