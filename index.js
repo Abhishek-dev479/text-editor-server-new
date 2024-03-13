@@ -31,7 +31,7 @@ const User = mongoose.model('users', userSchema);
 
 const io = require("socket.io")(3001, {
   cors: {
-    origin: "https://text-editor-client-new.onrender.com",
+    origin: "*",
   }
 })
 
